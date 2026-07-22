@@ -15,8 +15,9 @@ from .utils import LOGGER, configure_logging, ensure_directory
 SUPPORTED_IMAGE_SUFFIXES = {".jpg", ".jpeg", ".png", ".webp"}
 LOG_EVERY_N_IMAGES = 100
 CHECKPOINT_EVERY_N_IMAGES = 500
-EMBEDDING_FILENAME = "embeddings.pkl"
+EMBEDDING_FILENAME = "embeddings.npy"
 FILENAMES_FILENAME = "filenames.pkl"
+EMBEDDING_DIM = 1280
 
 
 def list_image_files(images_dir: Path) -> List[Path]:
@@ -38,12 +39,15 @@ def save_progress(artifacts_dir: Path, embeddings: Sequence[np.ndarray], filenam
     """Persist the current embeddings and filenames checkpoint to disk."""
     ensure_directory(artifacts_dir)
 
-    embedding_array = np.vstack(embeddings).astype(np.float32) if embeddings else np.empty((0, 1280), dtype=np.float32)
+    embedding_array = (
+        np.vstack(embeddings).astype(np.float32)
+        if embeddings
+        else np.empty((0, EMBEDDING_DIM), dtype=np.float32)
+    )
     embeddings_path = artifacts_dir / EMBEDDING_FILENAME
     filenames_path = artifacts_dir / FILENAMES_FILENAME
 
-    with embeddings_path.open("wb") as embeddings_file:
-        pickle.dump(embedding_array, embeddings_file)
+    np.save(embeddings_path, embedding_array)
 
     with filenames_path.open("wb") as filenames_file:
         pickle.dump(list(filenames), filenames_file)
@@ -56,7 +60,7 @@ def generate_embeddings(images_dir: Path, artifacts_dir: Path, device: str | Non
 
     Args:
         images_dir: Directory containing input images.
-        artifacts_dir: Directory where checkpoint and final pickle files are saved.
+        artifacts_dir: Directory where checkpoint and final files are saved.
         device: Optional inference device override.
 
     Returns:
