@@ -1,7 +1,8 @@
-dataset/
-artifacts/
 __pycache__/
 *.pyc
+*.pyo
+*.egg-info/
+artifacts/
+dataset/
 .venv/
 .vscode/
-*.egg-info/
