@@ -18,7 +18,7 @@ DEFAULT_TOP_K = 5
 RESULTS_PER_ROW_WIDE = 3
 RESULTS_PER_ROW_NARROW = 2
 QUERY_IMAGE_WIDTH_PX = 330
-RESULT_IMAGE_HEIGHT_PX = 240
+RESULT_IMAGE_HEIGHT_PX = 176
 
 
 st.set_page_config(
@@ -85,26 +85,40 @@ def apply_custom_styles() -> None:
             box-shadow: 0 14px 36px rgba(15, 23, 42, 0.07);
             padding: 1rem;
             margin-bottom: 1rem;
+            min-height: 100%;
+            display: flex;
+            flex-direction: column;
+            gap: 0.15rem;
         }
         .result-image {
             width: 100%;
-            height: 240px;
+            height: 176px;
             border-radius: 16px;
             overflow: hidden;
-            background: linear-gradient(180deg, #f8fafc 0%, #eef2f7 100%);
+            background: #f1f5f9;
             border: 1px solid #edf2f7;
             display: flex;
             align-items: center;
             justify-content: center;
-            margin-bottom: 0.9rem;
+            margin-bottom: 1rem;
+            padding: 0.65rem;
         }
         .result-image img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
+            max-width: 100%;
+            max-height: 100%;
+            width: auto;
+            height: auto;
+            object-fit: contain;
             display: block;
+            margin: 0 auto;
+            image-rendering: auto;
         }
         .missing-image {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 100%;
+            height: 100%;
             color: #64748b;
             font-size: 0.95rem;
             font-weight: 600;
@@ -117,12 +131,12 @@ def apply_custom_styles() -> None:
             font-weight: 700;
             line-height: 1.4;
             margin-bottom: 0.35rem;
-            min-height: 2.8rem;
+            min-height: 3rem;
         }
         .product-id {
             color: #64748b;
             font-size: 0.85rem;
-            margin-bottom: 0.75rem;
+            margin-bottom: 0.85rem;
         }
         .meta-line {
             color: #334155;
@@ -284,7 +298,7 @@ def render_sidebar() -> tuple[int, float]:
         "Minimum similarity",
         min_value=0.0,
         max_value=1.0,
-        value=0.60,
+        value=0.50,
         step=0.01,
         format="%.2f",
     )
@@ -430,3 +444,5 @@ def main() -> None:
 
 if __name__ == "__main__":
     main()
+
+
