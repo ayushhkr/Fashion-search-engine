@@ -1,0 +1,2 @@
+"""Fashion image retrieval package."""
+
