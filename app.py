@@ -1,12 +1,12 @@
-from pathlib import Path
+﻿from pathlib import Path
 
 import streamlit as st
 from PIL import UnidentifiedImageError
 
-from src.fashion_image_search.config import AppConfig
-from src.fashion_image_search.feature_extractor import FeatureExtractor
-from src.fashion_image_search.search import FashionSearchEngine
-from src.fashion_image_search.utils import safe_open_image
+from fashion_image_search.config import AppConfig
+from fashion_image_search.feature_extractor import FeatureExtractor
+from fashion_image_search.search import FashionSearchEngine
+from fashion_image_search.utils import safe_open_image
 
 
 st.set_page_config(
@@ -19,7 +19,7 @@ st.set_page_config(
 @st.cache_resource(show_spinner=False)
 def load_search_engine() -> FashionSearchEngine:
     config = AppConfig()
-    extractor = FeatureExtractor(model_name=config.model_name, device=config.device)
+    extractor = FeatureExtractor(device=config.device)
     return FashionSearchEngine(
         extractor=extractor,
         artifacts_dir=config.artifacts_dir,

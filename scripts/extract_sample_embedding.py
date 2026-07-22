@@ -1,9 +1,9 @@
-from __future__ import annotations
+﻿from __future__ import annotations
 
 import logging
 from pathlib import Path
 
-from src.fashion_image_search.feature_extractor import FeatureExtractor
+from fashion_image_search.feature_extractor import FeatureExtractor
 
 
 logging.basicConfig(
